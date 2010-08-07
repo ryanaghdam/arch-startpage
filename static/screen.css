@@ -1,0 +1,36 @@
+html body 
+{
+  background-color: #333333;
+  color: #A6A6A6;
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 1.125em;
+  margin-top: 4em;
+}
+
+html body input#search-text
+{
+  margin-top: 1.5em;
+  font-size: 1em;
+  padding: 0.25em;
+  border: solid 0.25em #A6A6A6;
+  background-color: #EFEFEF;
+}
+
+html body input#search-text:focus
+{
+  border-color: #1793D1;
+}
+
+html body input#search-button
+{
+  font-size: 1em;
+  padding: 0.25em;
+  border: solid 0.25em #A6A6A6;
+  background-color: #EFEFEF;
+}
+
+html body input#search-button:active
+{
+  border-color: #1793D1;
+}
