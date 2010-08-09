@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <title>arch-startpage.appspot.com</title>
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.1.1/build/cssreset/reset-min.css">
     <link rel="stylesheet" type="text/css" href="static/screen.css">
     <script type="text/javascript" src="static/keyboard.js"></script>
     <script type="text/javascript">
@@ -17,18 +18,28 @@
      </script>
   </head>
   <body>
-    <img src="static/archlinux-logo-light-90dpi.png " id="arch-logo">
+    <div id="arch-logo">
+      <img src="static/archlinux-logo-light-90dpi.png " id="arch-logo"
+      alt="arch logo">
+    </div>
     <form name="search-form" method="get"> 
-      <div>
+      <div id="search-engines">
         {% for search_engine in search_engines %}
           {{ search_engine }}
         {% endfor %}
       </div>
-      <div>
+      <div id="input-box">
         <input type="text" id="search-text" name="search-text" size="40"
         autofocus>
         <input type="submit" value="Search" id="search-button">
+        <!-- For BBS search -->
+        <input name="action" value="search" type="hidden">
       </div>
     </form>
+    <div id="news">
+      {% for news_item in news_items %}
+        {{ news_item }}
+      {% endfor %}
+    </div>
   </body>
 </html>

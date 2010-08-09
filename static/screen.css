@@ -1,11 +1,30 @@
-html body 
+html 
 {
   background-color: #333333;
   color: #A6A6A6;
-  text-align: center;
+}
+
+html body
+{
   font-family: sans-serif;
   font-size: 1.125em;
   margin-top: 4em;
+}
+
+html body div#arch-logo
+{
+  text-align: center;
+}
+
+html body div#search-engines
+{
+  text-align: center;
+  margin-top: 1em;
+}
+
+html body div#input-box
+{
+  text-align: center;
 }
 
 html body input#search-text
@@ -33,4 +52,34 @@ html body input#search-button
 html body input#search-button:active
 {
   border-color: #1793D1;
+}
+
+html body div#news
+{
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 4em;
+  margin-bottom: 2em;
+  width: 600px;
+}
+
+html body div#news
+{
+  background-color: #EFEFEF;
+  border: solid 0.25em #A6A6A6;
+  color: #333333;
+  font-size: 0.7em;
+  line-height: 1.45;
+  padding: 0.5em;
+}
+
+html body div#news article.news-item+article.news-item
+{
+  margin-top:  1em;
+}
+
+html body div#news article.news-item heading h1
+{
+  font-size: 1.125em;
+  font-weight: bold;
 }

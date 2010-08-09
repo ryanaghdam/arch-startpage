@@ -1,5 +1,13 @@
 #!/usr/bin/env python2.5
 
+import urllib
+try:
+  from xml.etree.cElementTree import *
+except ImportError:
+  try:
+    from xml.etree.ElementTree import *
+  except ImportError:
+    from elementtree.ElementTree import *
 import os
 
 from google.appengine.ext import webapp
@@ -9,12 +17,26 @@ from google.appengine.ext.webapp import template
 class HomePage:
   def __init__(self, search_engines=[]):
     self.search_engines = search_engines
+    self.news_items = []
+    self.update_news()
 
   def template_values(self):
-    return { 'search_engines': self.search_engines }
+    return { 
+      'search_engines': self.search_engines,
+      'news_items': self.news_items
+      }
 
   def build_url(self, key, term):
     return "%s%s" % (self.get_engine_url_by_key(key), term)
+
+  def update_news(self):
+    NEWS_URL = 'http://www.archlinux.org/feeds/news/'
+
+    rss = parse(urllib.urlopen(NEWS_URL)).getroot()
+    entries = rss.findall('channel/item')
+    for element in entries:
+      self.news_items.append(NewsItem(element.findtext('title'),
+        element.findtext('description')))
 
   def get_engine_url_by_key(self, key):
     for search_engine in self.search_engines:
@@ -23,6 +45,21 @@ class HomePage:
 
   def __str__(self):
     path = os.path.join(os.path.dirname(__file__), 'main.html')
+    return template.render(path, self.template_values())
+
+class NewsItem:
+  def __init__(self, title, description):
+    self.title = title
+    self.description = description
+
+  def template_values(self):
+    return {
+      'title': self.title,
+      'description': self.description
+      }
+
+  def __str__(self):
+    path = os.path.join(os.path.dirname(__file__), 'news-item.html')
     return template.render(path, self.template_values())
 
 class SearchEngine:
@@ -52,6 +89,8 @@ class MainHandler(webapp.RequestHandler):
           'http://google.com/search?q='),
         SearchEngine('wiki', 'Arch<u>W</u>iki', 
           'http://wiki.archlinux.org/index.php?search='),
+        SearchEngine('bbs', 'Arch <u>F</u>orums',
+          'https://bbs.archlinux.org/search.php?keywords='),
         SearchEngine('aur', '<u>A</u>UR',
           'http://aur.archlinux.org/packages.php?O=0&do_Search=Go&K=')
         ])

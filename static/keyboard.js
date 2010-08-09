@@ -1,8 +1,9 @@
 function getKey() {
   var key = new Array();
-  key['g'] = 'google',
-  key['a'] = 'aur',
-  key['w'] = 'wiki',
+  key['g'] = 'google';
+  key['a'] = 'aur';
+  key['w'] = 'wiki';
+  key['f'] = 'bbs';
 
   isNetscape=(document.layers);
   eventChooser = (isNetscape) ? keyStroke.which : event.keyCode;
