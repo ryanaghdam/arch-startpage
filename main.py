@@ -15,10 +15,11 @@ from google.appengine.ext.webapp import util
 from google.appengine.ext.webapp import template
 
 class HomePage:
-  def __init__(self, search_engines=[]):
+  def __init__(self, search_engines=[], enable_news=True):
     self.search_engines = search_engines
     self.news_items = []
-    self.update_news()
+    if enable_news:
+      self.update_news()
 
   def template_values(self):
     return { 
@@ -84,6 +85,11 @@ class SearchEngine:
 
 class MainHandler(webapp.RequestHandler):
     def get(self):
+      if self.request.get('news') == 'yes':
+        news_enabled = True
+      else:
+        news_enabled = False
+
       homepage = HomePage([
         SearchEngine('google', '<u>G</u>oogle', 
           'http://google.com/search?q='),
@@ -93,7 +99,7 @@ class MainHandler(webapp.RequestHandler):
           'https://bbs.archlinux.org/search.php?keywords='),
         SearchEngine('aur', '<u>A</u>UR',
           'http://aur.archlinux.org/packages.php?O=0&do_Search=Go&K=')
-        ])
+        ], news_enabled)
 
       if self.request.get('search-engine'):
         self.redirect(homepage.build_url(self.request.get('search-engine'),

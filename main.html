@@ -36,10 +36,12 @@
         <input name="action" value="search" type="hidden">
       </div>
     </form>
-    <div id="news">
-      {% for news_item in news_items %}
-        {{ news_item }}
-      {% endfor %}
-    </div>
+    {% if news_items %}
+      <div id="news">
+        {% for news_item in news_items %}
+          {{ news_item }}
+        {% endfor %}
+      </div>
+    {% endif %}
   </body>
 </html>
